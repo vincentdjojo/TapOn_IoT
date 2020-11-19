@@ -1,4 +1,13 @@
 ''' 
+This Python program collects data from 
+Some issues faced tackling this program:
+1. https://github.com/VernierST/godirect-examples/issues/30 ( Is it possible to record using more than 1 sensor at a time? )
+2. https://github.com/VernierST/godirect-examples/issues/31 ( Can't get Vernier temperature bluetooth sensor to Raspberry Pi using GoDirect library. )
+
+Libraries Needed:
+1. Go Direct Libraries (gdx) from vernier. Installation here: https://vernierst.github.io/godirect-examples/python/.
+2. PyMongo to connect Python to MongoDB. Type "pip3 install pymongo" on terminal.
+
 The gdx functions are located in a gdx.py file inside a folder named "gdx". In order for 
 the import to find the gdx folder, the folder needs to be in the same directory as this python program.
 
@@ -55,29 +64,36 @@ except KeyError:
 formattedString = ""
 
 while True:
-    for i in range(0,5): #Recording sensor data for 2500ms.
+    for i in range(0,5): #Recording sensor data for 2500ms every 500ms. 5 readings every 2500ms.
         measurements = gdx1.read()
+        
+        #Store sensor data into array.
         n03Sensor.append ( measurements [ 0 ] )
-        doSensor.append ( measurements [ 1 ] )
-        nh4Sensor.append ( measurements [ 2 ] )
+        doSensor.append ( measurements [ 1 ] ) 
+        nh4Sensor.append ( measurements [ 2 ] ) 
+        
         if measurements == None:
             break 
         print(measurements)
 
-    n03Average = sum ( n03Sensor ) / 5
+    #Get the sum of each sensor data array and divide them by 5 for the average of each array.
+    n03Average = sum ( n03Sensor ) / 5 
     doAverage = sum ( doSensor ) / 5
     nh4Average = sum ( nh4Sensor ) / 5
 
+    #Clear each array for further use when the while loop repeats itself.
     n03Sensor.clear ()
     doSensor.clear ()
     nh4Sensor.clear ()
 
-formattedString =  str ( time.time() ) + ";" + ( str ( n03Average )  + "," + str ( doAverage ) + "," + str ( nh4Average ) )
+    #Format string into comma seperated values for parsing on MongDB.
+    formattedString =  str ( time.time() ) + ";" + ( str ( n03Average )  + "," + str ( doAverage ) + "," + str ( nh4Average ) )
 
-
+    #Upload the formatted string to MongoDB database. It updates the same cell everytime it uploads on MongoDB.
     myquery = { "id": "0" }
     newvalues = { "$set": { "piString":formattedString } }
     collection.update_one(myquery, newvalues)
+    
 print ( "Stored Sensor Data:\n" )
 print ( n03Sensor )
 print ( doSensor )
