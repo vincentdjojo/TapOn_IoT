@@ -55,7 +55,7 @@ except KeyError:
 formattedString = ""
 
 while True:
-    for i in range(0,5): #Recording sensor data for 5 minutes. 5 minutes has 600 units of 500ms.
+    for i in range(0,5): #Recording sensor data for 2500ms.
         measurements = gdx1.read()
         n03Sensor.append ( measurements [ 0 ] )
         doSensor.append ( measurements [ 1 ] )
@@ -64,16 +64,15 @@ while True:
             break 
         print(measurements)
 
-    n03Average = sum(n03Sensor) / 5
-    doAverage = sum(doSensor) / 5
-    nh4Average = sum(nh4Sensor) / 5
+    n03Average = sum ( n03Sensor ) / 5
+    doAverage = sum ( doSensor ) / 5
+    nh4Average = sum ( nh4Sensor ) / 5
 
-    n03Sensor.clear()
-    doSensor.clear()
-    nh4Sensor.clear()
+    n03Sensor.clear ()
+    doSensor.clear ()
+    nh4Sensor.clear ()
 
-    #print (n03Average, doAverage, nh4Average )
-    formattedString =  str ( time.time() ) + ";" + (str ( n03Average )  + "," + str ( doAverage ) + "," + str ( nh4Average ) )
+formattedString =  str ( time.time() ) + ";" + ( str ( n03Average )  + "," + str ( doAverage ) + "," + str ( nh4Average ) )
 
 
     myquery = { "id": "0" }
