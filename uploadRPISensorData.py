@@ -1,5 +1,7 @@
 ''' 
-This Python program collects data from 
+This Python program runs on a Raspberry Pi 4 with three Vernier sensors connected to the USB ports of the Raspberry Pi. 
+The program collects data from the sensor every 500ms and uploads the data to MongoDB.
+
 Some issues faced tackling this program:
 1. https://github.com/VernierST/godirect-examples/issues/30 ( Is it possible to record using more than 1 sensor at a time? )
 2. https://github.com/VernierST/godirect-examples/issues/31 ( Can't get Vernier temperature bluetooth sensor to Raspberry Pi using GoDirect library. )
