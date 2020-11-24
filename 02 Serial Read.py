@@ -1,4 +1,4 @@
-#Check devices on Raspberry Pi's ports: python -m serial.tools.miniterm
+# Check devices on Raspberry Pi's ports: python -m serial.tools.miniterm
 # Import Libraries
 import serial
 import time
