@@ -1,4 +1,5 @@
 # Check devices on Raspberry Pi's ports: python -m serial.tools.miniterm
+# Code for microbit: https://makecode.microbit.org/93193-13394-23340-40251
 # Import Libraries
 import serial
 import time
